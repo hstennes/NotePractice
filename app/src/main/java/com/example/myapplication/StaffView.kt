@@ -13,9 +13,8 @@ import java.util.Random
 
 class StaffView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
-    private var w = 0f;
-    private var h = 0f;
-    private var note = 4;
+    private var w = 0f
+    private var h = 0f
 
     private var trebleImg: Bitmap
 
@@ -29,7 +28,11 @@ class StaffView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     companion object {
         private const val TOP_SPACING = 400f;
         private const val STAFF_SPACING = 100f;
+        private const val EXTRA_LINE_START = 425f
+        private const val EXTRA_LINE_END = 675f
     }
+
+    var note = 4
 
     init {
         val trebleSvg = SVG.getFromResource(resources, R.raw.treble)
@@ -61,6 +64,15 @@ class StaffView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
             }
             drawBitmap(trebleImg, -150f, 200f, paint)
             drawBitmap(noteImg, 400f, 50 * note + 50f, paint)
+
+            if(note <= 2)
+                drawLine(EXTRA_LINE_START, TOP_SPACING - STAFF_SPACING, EXTRA_LINE_END, TOP_SPACING - STAFF_SPACING, paint)
+            if(note == 0)
+                drawLine(EXTRA_LINE_START, TOP_SPACING - 2 * STAFF_SPACING, EXTRA_LINE_END, TOP_SPACING - 2 * STAFF_SPACING, paint)
+            if(note >= 14)
+                drawLine(EXTRA_LINE_START, TOP_SPACING + 5 * STAFF_SPACING, EXTRA_LINE_END, TOP_SPACING + 5 * STAFF_SPACING, paint)
+            if(note == 16)
+                drawLine(EXTRA_LINE_START, TOP_SPACING + 6 * STAFF_SPACING, EXTRA_LINE_END, TOP_SPACING + 6 * STAFF_SPACING, paint)
         }
     }
 

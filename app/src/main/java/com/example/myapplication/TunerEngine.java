@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
@@ -38,11 +39,20 @@ public class TunerEngine extends Thread {
     final Handler mHandler;
     Runnable callback;
 
+    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
+
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+
     public TunerEngine(Handler mHandler, Runnable callback, Context context) {
         this.mHandler = mHandler;
         this.callback = callback;
         this.context = context;
+
+        ActivityCompat.requestPermissions((Activity) context, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+
         initAudioRecord();
+
+//        System.out.println("Path thing: " + System.getProperty("java.library.path"));
     }
 
     private void initAudioRecord() {
@@ -93,9 +103,9 @@ public class TunerEngine extends Thread {
                 mHandler.post(callback);
                 try {
                     targetDataLine_.stop();
-                    Thread.sleep(20);
+//                    Thread.sleep(20);
                     targetDataLine_.startRecording();
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
 //                    e.printStackTrace();
                 }
             }

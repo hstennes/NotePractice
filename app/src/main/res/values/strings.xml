@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Note Practice Thing</string>
+    <string name="text_frequency">Frequency: %1$d</string>
 </resources>
